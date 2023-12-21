@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProviders';
 
 const Login = () => {
-
-    const { signIn } = useContext(AuthContext);
+    const { signIn, signInwithGoogle } = useContext(AuthContext);
 
 
     const handleLogin = event => {
@@ -26,6 +25,17 @@ const Login = () => {
                 console.log(error);
             })
 
+    }
+
+    const handleGoogleSignIn = () => {
+        signInwithGoogle()
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
     return (
         <div>
@@ -54,9 +64,14 @@ const Login = () => {
                                 <button className="btn btn-primary">Login</button>
                             </div>
                         </form>
-                        <Link to="/register">
-                            <button className='btn btn-active btn-link'>Forget Password</button>
-                        </Link>
+                        <p>
+                            <Link to="/register">
+                                <button className='btn btn-active btn-link'>Forget Password</button>
+                            </Link>
+                        </p>
+                        <div>
+                            <button onClick={handleGoogleSignIn} className='btn btn-primary'>Google</button>
+                        </div>
                     </div>
                 </div>
             </div>
